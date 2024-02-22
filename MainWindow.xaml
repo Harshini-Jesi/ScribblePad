@@ -1,0 +1,19 @@
+﻿<Window x:Class="BasicScrawls.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BasicScrawls"
+        mc:Ignorable="d"
+        Title="Scrawler's Page" Height="450" Width="800" Background="Transparent">
+    <StackPanel>
+        <Menu>
+            <MenuItem Header="File">
+                <MenuItem Name="TxtOpen" Header="Open Text" Click="TxtOpen_Click"/>
+                <MenuItem Name="BinOpen" Header="Open Binary" Click="BinOpen_Click"/>
+                <MenuItem Name="TxtSave" Header="Save as Text" Click="TxtSave_Click"/>
+                <MenuItem Name="BinSave" Header="Save as Binary" Click="BinSave_Click"/>
+            </MenuItem>
+        </Menu>
+    </StackPanel>
+</Window>
