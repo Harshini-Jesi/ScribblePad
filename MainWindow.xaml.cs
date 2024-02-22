@@ -24,8 +24,7 @@ namespace BasicScrawls {
    /// </summary>
    public partial class MainWindow : Window {
       public MainWindow () {
-         marker = new ();
-         marker.Brush = Brushes.White;
+         marker = new (Brushes.White, 1);
          scrawlPoints = new ();
          InitializeComponent ();
       }
@@ -44,7 +43,7 @@ namespace BasicScrawls {
          scrawlPoints.Clear ();
          if (e.LeftButton == MouseButtonState.Pressed) {
             Point pt = e.GetPosition (this);
-            scrawlPoints.Add (new Point (pt.X, pt.Y));
+            scrawlPoints.Add (pt);
             InvalidateVisual ();
          }
       }
@@ -52,7 +51,7 @@ namespace BasicScrawls {
       protected override void OnMouseMove (MouseEventArgs e) {
          if (e.LeftButton == MouseButtonState.Pressed) {
             Point pt = e.GetPosition (this);
-            scrawlPoints.Add (new Point (pt.X, pt.Y));
+            scrawlPoints.Add (pt);
             InvalidateVisual ();
          }
       }
@@ -60,7 +59,7 @@ namespace BasicScrawls {
       protected override void OnMouseLeftButtonUp (MouseButtonEventArgs e) {
          if (e.LeftButton == MouseButtonState.Released) {
             Point pt = e.GetPosition (this);
-            scrawlPoints.Add (new Point (pt.X, pt.Y));
+            scrawlPoints.Add (pt);
          }
       }
 
