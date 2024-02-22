@@ -34,13 +34,11 @@ namespace BasicScrawls {
 
       protected override void OnRender (DrawingContext dc) {
          base.OnRender (dc);
-         for (int i = 0; i < scrawlPoints.Count - 1; i++) {
+         for (int i = 0; i < scrawlPoints.Count - 1; i++)
             dc.DrawLine (marker, scrawlPoints[i], scrawlPoints[i + 1]);
-         }
       }
 
       protected override void OnMouseLeftButtonDown (MouseButtonEventArgs e) {
-         scrawlPoints.Clear ();
          if (e.LeftButton == MouseButtonState.Pressed) {
             Point pt = e.GetPosition (this);
             scrawlPoints.Add (pt);
@@ -57,10 +55,8 @@ namespace BasicScrawls {
       }
 
       protected override void OnMouseLeftButtonUp (MouseButtonEventArgs e) {
-         if (e.LeftButton == MouseButtonState.Released) {
-            Point pt = e.GetPosition (this);
-            scrawlPoints.Add (pt);
-         }
+         if (e.LeftButton == MouseButtonState.Released)
+            scrawlPoints.Add (new Point (double.NaN, double.NaN));
       }
 
       private void TxtSave_Click (object sender, RoutedEventArgs e) {
@@ -81,9 +77,9 @@ namespace BasicScrawls {
       }
 
       private void TxtOpen_Click (object sender, RoutedEventArgs e) {
-         scrawlPoints.Clear ();
          OpenFileDialog txt_open = new ();
          if (txt_open.ShowDialog () == true) {
+            scrawlPoints.Clear ();
             scrawlPoints = PointCollection.Parse (File.ReadAllText (txt_open.FileName));
             InvalidateVisual ();
          }
