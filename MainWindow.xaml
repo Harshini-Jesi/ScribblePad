@@ -14,6 +14,17 @@
                 <MenuItem Name="TxtSave" Header="Save as Text" Click="TxtSave_Click"/>
                 <MenuItem Name="BinSave" Header="Save as Binary" Click="BinSave_Click"/>
             </MenuItem>
+            <MenuItem Name="Undo" Click="Undo_Click">
+                <MenuItem.Icon>
+                    <Image Source="C:\Users\sivabalanha\Downloads\undo_icon.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Name="Redo" Click="Redo_Click">
+                <MenuItem.Icon>
+                    <Image Source="C:\Users\sivabalanha\Downloads\redo_icon.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Name="Clear" Header="Clear all" Click="Clear_Click"/>
         </Menu>
     </StackPanel>
 </Window>
