@@ -5,26 +5,54 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BasicScrawls"
         mc:Ignorable="d"
-        Title="Scrawler's Page" Height="450" Width="800" Background="Transparent">
-    <StackPanel>
-        <Menu>
-            <MenuItem Header="File">
-                <MenuItem Name="TxtOpen" Header="Open Text" Click="TxtOpen_Click"/>
-                <MenuItem Name="BinOpen" Header="Open Binary" Click="BinOpen_Click"/>
-                <MenuItem Name="TxtSave" Header="Save as Text" Click="TxtSave_Click"/>
-                <MenuItem Name="BinSave" Header="Save as Binary" Click="BinSave_Click"/>
-            </MenuItem>
-            <MenuItem Name="Undo" Click="Undo_Click">
-                <MenuItem.Icon>
-                    <Image Source="C:\Users\sivabalanha\Downloads\undo_icon.png"/>
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Name="Redo" Click="Redo_Click">
-                <MenuItem.Icon>
-                    <Image Source="C:\Users\sivabalanha\Downloads\redo_icon.png"/>
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Name="Clear" Header="Clear all" Click="Clear_Click"/>
-        </Menu>
-    </StackPanel>
+        Title="Untitled - Scribble Pad" Background="Transparent" WindowState="Maximized">
+    <DockPanel Name="Dock" LastChildFill="False" ToggleButton.Checked="DockPanel_Checked">
+        <DockPanel.Resources>
+            <Style TargetType="ToggleButton">
+                <Setter Property="DockPanel.Dock" Value="Top"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Width" Value="50"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="DockPanel.Dock" Value="Top"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Width" Value="50"/>
+            </Style>
+            <Style TargetType="Image">
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Width" Value="30"/>
+            </Style>
+        </DockPanel.Resources>
+        <Button ToolTip="New" Content="New" Click="New_Click"/>
+        <Button ToolTip="Open" Click="BinOpen_Click">
+            <Image Source="Icons/open_icon.png"/>
+        </Button>
+        <Button ToolTip="Save" Click="BinSave_Click">
+            <Image Source="Icons/save_icon.png"/>
+        </Button>
+        <Button ToolTip="Undo" Click="Undo_Click">
+            <Image Source="Icons/undo_icon.png"/>
+        </Button>
+        <Button ToolTip="Redo" Click="Redo_Click">
+            <Image Source="Icons/redo_icon.png"/>
+        </Button>
+        <ToggleButton ToolTip="Pen" Name="scrawl" IsChecked="True">
+            <Image Source="Icons/pen_icon.png"/>
+        </ToggleButton>
+        <ToggleButton ToolTip="Line" Name="line">
+            <Image Source="Icons/line_icon.png"/>
+        </ToggleButton>
+        <ToggleButton ToolTip="Rectangle" Name="rect">
+            <Image Source="Icons/rectangle_icon.png"/>
+        </ToggleButton>
+        <ToggleButton ToolTip="Circle" Name="circle">
+            <Image Source="Icons/circle_icon.png"/>
+        </ToggleButton>
+        <ToggleButton ToolTip="Connected Line" Name="conLine" Click="ConLine_Click">
+            <Image Source="Icons/connecline_icon.png"/>
+        </ToggleButton>
+        <Button Name="Clear" Content="Clear All" Click="Clear_Click"/>
+    </DockPanel>
 </Window>

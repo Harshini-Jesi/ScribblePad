@@ -3,12 +3,34 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove=".gitignore" />
+    <None Remove="Icons\circle_icon.png" />
+    <None Remove="Icons\connecline_icon.png" />
+    <None Remove="Icons\line_icon.png" />
+    <None Remove="Icons\open_icon.png" />
+    <None Remove="Icons\pen_icon.png" />
+    <None Remove="Icons\rectangle_icon.png" />
+    <None Remove="Icons\redo_icon.png" />
+    <None Remove="Icons\save_icon.png" />
+    <None Remove="Icons\scribble_icon.png" />
+    <None Remove="Icons\undo_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\circle_icon.png" />
+    <Resource Include="Icons\connecline_icon.png" />
+    <Resource Include="Icons\line_icon.png" />
+    <Resource Include="Icons\open_icon.png" />
+    <Resource Include="Icons\pen_icon.png" />
+    <Resource Include="Icons\rectangle_icon.png" />
+    <Resource Include="Icons\redo_icon.png" />
+    <Resource Include="Icons\save_icon.png" />
+    <Resource Include="Icons\scribble_icon.png" />
+    <Resource Include="Icons\undo_icon.png" />
   </ItemGroup>
 
 </Project>
