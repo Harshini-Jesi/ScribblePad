@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BasicScrawls"
         mc:Ignorable="d"
-        Name="MainPage" Title="Untitled - Scribble Pad" Background="Transparent" WindowState="Maximized">
+        Title="Untitled - Scribble Pad" Background="Transparent" WindowState="Maximized">
     <DockPanel Name="Dock" LastChildFill="False" ToggleButton.Checked="DockPanel_Checked">
         <DockPanel.Resources>
             <Style TargetType="ToggleButton">

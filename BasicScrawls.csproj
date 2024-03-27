@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="BackEnd\**" />
+    <EmbeddedResource Remove="BackEnd\**" />
+    <None Remove="BackEnd\**" />
+    <Page Remove="BackEnd\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove=".gitignore" />
     <None Remove="Icons\circle_icon.png" />
     <None Remove="Icons\connecline_icon.png" />
@@ -21,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BackEnd\BackEnd.csproj" />
+    <ProjectReference Include="BackEnd\BackEnd.csproj" />
   </ItemGroup>
 
   <ItemGroup>
