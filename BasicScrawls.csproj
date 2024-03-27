@@ -21,6 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BackEnd\BackEnd.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Icons\circle_icon.png" />
     <Resource Include="Icons\connecline_icon.png" />
     <Resource Include="Icons\line_icon.png" />

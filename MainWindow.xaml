@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BasicScrawls"
         mc:Ignorable="d"
-        Title="Untitled - Scribble Pad" Background="Transparent" WindowState="Maximized">
+        Name="MainPage" Title="Untitled - Scribble Pad" Background="Transparent" WindowState="Maximized">
     <DockPanel Name="Dock" LastChildFill="False" ToggleButton.Checked="DockPanel_Checked">
         <DockPanel.Resources>
             <Style TargetType="ToggleButton">
@@ -25,17 +25,17 @@
                 <Setter Property="Width" Value="30"/>
             </Style>
         </DockPanel.Resources>
-        <Button ToolTip="New" Content="New" Click="New_Click"/>
-        <Button ToolTip="Open" Click="BinOpen_Click">
+        <Button ToolTip="New" Content="New" Click="OnNew_Click"/>
+        <Button ToolTip="Open" Click="OnBinOpen_Click">
             <Image Source="Icons/open_icon.png"/>
         </Button>
-        <Button ToolTip="Save" Click="BinSave_Click">
+        <Button ToolTip="Save" Click="OnBinSave_Click">
             <Image Source="Icons/save_icon.png"/>
         </Button>
-        <Button ToolTip="Undo" Click="Undo_Click">
+        <Button Name="undo" ToolTip="Undo" Click="OnUndo_Click" IsEnabled="False">
             <Image Source="Icons/undo_icon.png"/>
         </Button>
-        <Button ToolTip="Redo" Click="Redo_Click">
+        <Button Name="redo" ToolTip="Redo" Click="OnRedo_Click" IsEnabled="False">
             <Image Source="Icons/redo_icon.png"/>
         </Button>
         <ToggleButton ToolTip="Pen" Name="scrawl" IsChecked="True">
@@ -50,9 +50,14 @@
         <ToggleButton ToolTip="Circle" Name="circle">
             <Image Source="Icons/circle_icon.png"/>
         </ToggleButton>
-        <ToggleButton ToolTip="Connected Line" Name="conLine" Click="ConLine_Click">
+        <ToggleButton ToolTip="Connected Line" Name="conLine" Click="OnConLine_Click">
             <Image Source="Icons/connecline_icon.png"/>
         </ToggleButton>
-        <Button Name="Clear" Content="Clear All" Click="Clear_Click"/>
+        <Button Name="Clear" Content="Clear All" Click="OnClear_Click"/>
+        <StatusBar Name="StatusBar" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Visibility="Collapsed">
+            <StatusBarItem>
+                <TextBlock Text="To stop (or) start a new one, click on the connected line tool again."/>
+            </StatusBarItem>
+        </StatusBar>
     </DockPanel>
 </Window>
