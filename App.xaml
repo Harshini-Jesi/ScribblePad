@@ -1,7 +1,7 @@
-﻿<Application x:Class="BasicScrawls.App"
+﻿<Application x:Class="CADye.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:BasicScrawls"
+             xmlns:local="clr-namespace:CADye"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

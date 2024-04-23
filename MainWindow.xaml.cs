@@ -1,58 +1,53 @@
 ﻿using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
-namespace BasicScrawls {
+namespace CADye {
    /// <summary>
    /// Interaction logic for MainWindow.xaml
    /// </summary>
    public partial class MainWindow : Window {
-      #region constructor -------------------------------------------
       public MainWindow () {
-         mEvents = new EventHandler (this);
          InitializeComponent ();
-         Closing += mEvents.MainWindow_Closing;
+         mCanvas.Window = this;
+         mDoc = new (mCanvas);
+         Closing += mDoc.MainWindow_Closing;
       }
-      EventHandler mEvents;
-      #endregion
 
-      #region EventHandlers -----------------------------------------
-      //Opens an existing file
-      private void OnBinOpen_Click (object sender, RoutedEventArgs e) => mEvents.EBinOpen (e);
+      public TextBlock Prompt => mPrompt;
 
-      //Saves the file
-      private void OnBinSave_Click (object sender, RoutedEventArgs e) => mEvents.EBinSave ();
+      private void OnNew_Click (object sender, RoutedEventArgs e) => mDoc.New (e);
 
-      //Clears the window
-      private void OnClear_Click (object sender, RoutedEventArgs e) => mEvents.EClear ();
+      private void OnOpen_Click (object sender, RoutedEventArgs e) => mDoc.Open (e);
 
-      //Click event for connected line icon
-      private void OnConLine_Click (object sender, RoutedEventArgs e) => mEvents.EConLine ();
+      private void OnSave_Click (object sender, RoutedEventArgs e) => mDoc.Save ();
 
-      //Click event for all toggle buttons on the dock panel
-      private void DockPanel_Checked (object sender, RoutedEventArgs e) => mEvents.EDockCheck (e);
+      private void OnUndo_Click (object sender, RoutedEventArgs e) => mCanvas.Undo ();
 
-      //Creates a new file
-      private void OnNew_Click (object sender, RoutedEventArgs e) => mEvents.ENew (e);
+      private void OnRedo_Click (object sender, RoutedEventArgs e) => mCanvas.Redo ();
 
-      //Performs redo action
-      private void OnRedo_Click (object sender, RoutedEventArgs e) => mEvents.ERedo ();
+      //private void OnConLine_Click (object sender, RoutedEventArgs e) { }
 
-      //Performs undo action
-      private void OnUndo_Click (object sender, RoutedEventArgs e) => mEvents.EUndo ();
-      #endregion
+      private void OnClear_Click (object sender, RoutedEventArgs e) => mDoc.Clear ();
 
-      #region MouseEvents -------------------------------------------
-      protected override void OnMouseLeftButtonDown (MouseButtonEventArgs e) => mEvents.EMouseDown (e);
-
-      protected override void OnMouseLeftButtonUp (MouseButtonEventArgs e) => mEvents.EMouseUp (e);
-
-      protected override void OnMouseMove (MouseEventArgs e) => mEvents.EMouseMove (e);
-
-      protected override void OnRender (DrawingContext dc) {
-         base.OnRender (dc);
-         mEvents.ERender (dc);
+      private void StackPanel_Checked (object sender, RoutedEventArgs e) {
+         if (mCanvas != null) {
+            mCanvas.SelectedButton = (ToggleButton)e.Source;
+            mCanvas.SelectedButton.Click += ToggleButton_Click;
+            mCanvas.SwitchWidget ();
+            e.Handled = true;
+         }
       }
-      #endregion
+
+      private void ToggleButton_Click (object sender, RoutedEventArgs e) {
+         var clickedToggleButton = sender as ToggleButton;
+         if (clickedToggleButton.IsChecked == true) {
+            foreach (var control in Stack.Children)
+               if (control is ToggleButton toggleButton)
+                  toggleButton.IsChecked = (toggleButton == clickedToggleButton);
+         } else clickedToggleButton.IsChecked = true;
+      }
+
+      DocManager mDoc;
    }
 }

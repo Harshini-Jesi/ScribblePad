@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="BackEnd\BackEnd.csproj" />
+    <ProjectReference Include="BackEnd\CADye.lib.csproj" />
   </ItemGroup>
 
   <ItemGroup>

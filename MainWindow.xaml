@@ -1,16 +1,16 @@
-﻿<Window x:Class="BasicScrawls.MainWindow"
+﻿<Window x:Class="CADye.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BasicScrawls"
+        xmlns:local="clr-namespace:CADye"
         mc:Ignorable="d"
-        Title="Untitled - Scribble Pad" Background="Transparent" WindowState="Maximized">
-    <DockPanel Name="Dock" LastChildFill="False" ToggleButton.Checked="DockPanel_Checked">
+        Title="Untitled - CADye" WindowState="Maximized">
+    <DockPanel>
         <DockPanel.Resources>
             <Style TargetType="ToggleButton">
-                <Setter Property="DockPanel.Dock" Value="Top"/>
-                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <!--<Setter Property="DockPanel.Dock" Value="Top"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>-->
                 <Setter Property="Height" Value="50"/>
                 <Setter Property="Width" Value="50"/>
             </Style>
@@ -25,39 +25,81 @@
                 <Setter Property="Width" Value="30"/>
             </Style>
         </DockPanel.Resources>
-        <Button ToolTip="New" Content="New" Click="OnNew_Click"/>
-        <Button ToolTip="Open" Click="OnBinOpen_Click">
-            <Image Source="Icons/open_icon.png"/>
-        </Button>
-        <Button ToolTip="Save" Click="OnBinSave_Click">
-            <Image Source="Icons/save_icon.png"/>
-        </Button>
-        <Button Name="undo" ToolTip="Undo" Click="OnUndo_Click" IsEnabled="False">
-            <Image Source="Icons/undo_icon.png"/>
-        </Button>
-        <Button Name="redo" ToolTip="Redo" Click="OnRedo_Click" IsEnabled="False">
-            <Image Source="Icons/redo_icon.png"/>
-        </Button>
-        <ToggleButton ToolTip="Pen" Name="scrawl" IsChecked="True">
-            <Image Source="Icons/pen_icon.png"/>
-        </ToggleButton>
-        <ToggleButton ToolTip="Line" Name="line">
-            <Image Source="Icons/line_icon.png"/>
-        </ToggleButton>
-        <ToggleButton ToolTip="Rectangle" Name="rect">
-            <Image Source="Icons/rectangle_icon.png"/>
-        </ToggleButton>
-        <ToggleButton ToolTip="Circle" Name="circle">
-            <Image Source="Icons/circle_icon.png"/>
-        </ToggleButton>
-        <ToggleButton ToolTip="Connected Line" Name="conLine" Click="OnConLine_Click">
-            <Image Source="Icons/connecline_icon.png"/>
-        </ToggleButton>
-        <Button Name="Clear" Content="Clear All" Click="OnClear_Click"/>
-        <StatusBar Name="StatusBar" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Visibility="Collapsed">
-            <StatusBarItem>
-                <TextBlock Text="To stop (or) start a new one, click on the connected line tool again."/>
+        <StatusBar DockPanel.Dock="Top" Background="LightGray">
+            <StatusBarItem HorizontalAlignment="Center">
+                <TextBlock x:Name="mPrompt" Text="Line: Pick beginning point" FontSize="20"/>
             </StatusBarItem>
         </StatusBar>
+        <StatusBar DockPanel.Dock="Top" FontWeight="SemiBold" FontSize="15">
+            <Grid x:Name="Grid">
+                <StatusBarItem x:Name="LineDetails" Margin="100,0,0,0" Visibility="Visible">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="X"/>
+                        <TextBox Height="30" Width="60"/>
+                        <Label Content="Y"/>
+                        <TextBox Height="30" Width="60"/>
+                        <Label Content="dX"/>
+                        <TextBox Height="30" Width="60"/>
+                        <Label Content="dY"/>
+                        <TextBox Height="30" Width="60"/>
+                        <Label Content="Length"/>
+                        <TextBox Height="30" Width="60"/>
+                        <Label Content="Angle"/>
+                        <TextBox Height="30" Width="60"/>
+                    </StackPanel>
+                </StatusBarItem>
+                <StatusBarItem x:Name="RectDetails" Margin="100,0,0,0" Visibility="Collapsed">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="X"/>
+                        <TextBox Height="30" Width="60"/>
+                        <Label Content="Y"/>
+                        <TextBox Height="30" Width="60"/>
+                        <Label Content="Width"/>
+                        <TextBox Height="30" Width="60"/>
+                        <Label Content="Height"/>
+                        <TextBox Height="30" Width="60"/>
+                    </StackPanel>
+                </StatusBarItem>
+                <StatusBarItem x:Name="CircleDetails" Margin="100,0,0,0" Visibility="Collapsed">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="X"/>
+                        <TextBox Height="30" Width="60"/>
+                        <Label Content="Y"/>
+                        <TextBox Height="30" Width="60"/>
+                        <Label Content="Radius"/>
+                        <TextBox Height="30" Width="60"/>
+                    </StackPanel>
+                </StatusBarItem>
+            </Grid>
+        </StatusBar>
+        <StackPanel Name="Stack" DockPanel.Dock="Left" Background="LightGray" ToggleButton.Checked="StackPanel_Checked">
+            <Button ToolTip="New" Content="New" Click="OnNew_Click"/>
+            <Button ToolTip="Open" Click="OnOpen_Click">
+                <Image Source="Icons/open_icon.png"/>
+            </Button>
+            <Button ToolTip="Save" Click="OnSave_Click">
+                <Image Source="Icons/save_icon.png"/>
+            </Button>
+            <Button Name="undo" ToolTip="Undo" Click="OnUndo_Click">
+                <Image Source="Icons/undo_icon.png"/>
+            </Button>
+            <Button Name="redo" ToolTip="Redo" Click="OnRedo_Click">
+                <Image Source="Icons/redo_icon.png"/>
+            </Button>
+            <ToggleButton ToolTip="Line" Name="line" IsChecked="True">
+                <Image Source="Icons/line_icon.png"/>
+            </ToggleButton>
+            <ToggleButton ToolTip="Rectangle" Name="rect">
+                <Image Source="Icons/rectangle_icon.png"/>
+            </ToggleButton>
+            <ToggleButton ToolTip="Circle" Name="circle">
+                <Image Source="Icons/circle_icon.png"/>
+            </ToggleButton>
+            <!--<ToggleButton ToolTip="Connected Line" Name="conLine" Click="OnConLine_Click">
+                <Image Source="Icons/connecline_icon.png"/>
+            </ToggleButton>-->
+            <Button Name="Clear" Content="Clear All" Click="OnClear_Click"/>
+        </StackPanel>
+        <local:Editor DockPanel.Dock="Right" Background="Black" x:Name="mCanvas"/>
     </DockPanel>
 </Window>
