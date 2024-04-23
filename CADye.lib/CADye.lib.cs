@@ -1,4 +1,4 @@
-﻿namespace CADyeShapes {
+﻿namespace CADye.lib {
    #region struct Point ---------------------------------------------------------------------------
    public struct Point {
       public double X, Y;

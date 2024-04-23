@@ -1,5 +1,5 @@
-﻿using CADyeShapes;
-using Point = CADyeShapes.Point;
+﻿using CADye.lib;
+using Point = CADye.lib.Point;
 using System.Windows.Input;
 
 namespace CADye;

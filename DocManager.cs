@@ -1,4 +1,4 @@
-﻿using CADyeShapes;
+﻿using CADye.lib;
 using Microsoft.Win32;
 using System.ComponentModel;
 using System.IO;

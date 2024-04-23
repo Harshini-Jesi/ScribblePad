@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="BackEnd\**" />
+    <Compile Remove="CADye.lib\**" />
     <EmbeddedResource Remove="BackEnd\**" />
+    <EmbeddedResource Remove="CADye.lib\**" />
     <None Remove="BackEnd\**" />
+    <None Remove="CADye.lib\**" />
     <Page Remove="BackEnd\**" />
+    <Page Remove="CADye.lib\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="BackEnd\CADye.lib.csproj" />
+    <ProjectReference Include="CADye.lib\CADye.lib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
