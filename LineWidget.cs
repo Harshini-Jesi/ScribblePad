@@ -9,9 +9,6 @@ public class LineWidget : Widget {
       if (mEditor.Window != null) ShowDetails ();
    }
 
-   public string PromptContent => "Line: Pick beginning point";
-   public string[] fc => new string[] { "X", "Y", };
-
    public override void OnMouseDown (MouseButtonEventArgs e) {
       Point startPoint;
       mEditor.Window.Prompt.Text = "Line: Pick beginning point";

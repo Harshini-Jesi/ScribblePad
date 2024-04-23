@@ -9,8 +9,6 @@
     <DockPanel>
         <DockPanel.Resources>
             <Style TargetType="ToggleButton">
-                <!--<Setter Property="DockPanel.Dock" Value="Top"/>
-                <Setter Property="HorizontalAlignment" Value="Left"/>-->
                 <Setter Property="Height" Value="50"/>
                 <Setter Property="Width" Value="50"/>
             </Style>

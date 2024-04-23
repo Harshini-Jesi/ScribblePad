@@ -7,12 +7,9 @@ using System.Windows;
 namespace CADye;
 public class DocManager {
    public DocManager (Editor editor) => mEditor = editor;
-   public Editor mEditor;
 
    public void Clear () {
-      //mEditor.Shape = null;
       mEditor.ShapesList.Clear ();
-      //mUndoRedo.Clear ();
       mEditor.InvalidateVisual ();
    }
 
@@ -46,7 +43,6 @@ public class DocManager {
          }
          mEditor.Shape = null;
          mEditor.ShapesList.Clear ();
-         //mUndoRedo.Clear ();
          BinaryReader br = new (File.Open (binOpen.FileName, FileMode.Open));
          int shapeCount = br.ReadInt32 ();
          for (int i = 0; i < shapeCount; i++) {
@@ -106,6 +102,8 @@ public class DocManager {
          }
       }
    }
+
+   public Editor mEditor;
    bool mIsSaved = false;
    string mSavedFileName = null;
 }

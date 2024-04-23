@@ -6,13 +6,34 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 
-
 namespace CADye;
+
+#region class Editor ------------------------------------------------------------------------------
 public class Editor : Canvas {
-   public Editor () {
-      mWidget = new LineWidget (this);
+   #region Constructor ----------------------------------------------
+   public Editor () => mWidget = new LineWidget (this);
+   #endregion
+
+   #region Properties -----------------------------------------------
+   public MainWindow Window { get; set; }
+
+   public ToggleButton SelectedButton {
+      get => mTogglebutton;
+      set => mTogglebutton = value;
    }
 
+   public List<Shapes> ShapesList {
+      get => mShapesList;
+      set => mShapesList = value;
+   }
+
+   public Shapes Shape {
+      get => mShape;
+      set => mShape = value;
+   }
+   #endregion
+
+   #region Overrides ------------------------------------------------
    protected override void OnMouseLeftButtonDown (MouseButtonEventArgs e) => mWidget.OnMouseDown (e);
 
    protected override void OnMouseMove (MouseEventArgs e) => mWidget.OnMouseMove (e);
@@ -24,7 +45,9 @@ public class Editor : Canvas {
       }
       if (mShape != null && mShape.pointList.Count > 0) mDwg.Draw (dc, mShape as dynamic);
    }
+   #endregion
 
+   #region Methods --------------------------------------------------
    public void Redo () {
       if (mUndoRedo.Count > 0) {
          mShapesList.Add (mUndoRedo.Pop ());
@@ -39,38 +62,25 @@ public class Editor : Canvas {
          mShapesList.Remove (mShapesList.Last ());
          InvalidateVisual ();
       }
-      //main.redo.IsEnabled = true;
    }
 
    public void SwitchWidget () {
       if (mWidget == null) return;
-      mWidget = togglebutton.Name switch {
+      mWidget = mTogglebutton.Name switch {
          "rect" => new RectWidget (this),
          "circle" => new CircleWidget (this),
          _ => new LineWidget (this)
       };
    }
+   #endregion
 
-   public MainWindow Window { get; set; }
-
-   public ToggleButton SelectedButton {
-      get => togglebutton;
-      set => togglebutton = value;
-   }
-   ToggleButton togglebutton = new ();
-
-   public List<Shapes> ShapesList {
-      get => mShapesList;
-      set => mShapesList = value;
-   }
+   #region Private --------------------------------------------------
+   ToggleButton mTogglebutton = new ();
    List<Shapes> mShapesList = new ();
-
-   public Shapes Shape {
-      get => mShape;
-      set => mShape = value;
-   }
    Shapes mShape;
    Widget mWidget;
    Drawing mDwg = new ();
    Stack<Shapes> mUndoRedo = new ();
+   #endregion
 }
+#endregion

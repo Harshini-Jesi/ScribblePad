@@ -4,8 +4,6 @@ using System.Windows.Media;
 
 namespace CADye;
 public class Drawing {
-   Pen mPen = new (Brushes.White, 2);
-
    public void Draw (DrawingContext dc, Line line) {
       System.Windows.Point start, end;
       start.X = line.pointList[0].X; start.Y = line.pointList[0].Y;
@@ -29,4 +27,6 @@ public class Drawing {
       double radius = Math.Sqrt ((x * x) + (y * y));
       dc.DrawEllipse (null, mPen, start, radius, radius);
    }
+
+   Pen mPen = new (Brushes.White, 2);
 }
