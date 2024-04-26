@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CADye"
         mc:Ignorable="d"
-        Title="Untitled - CADye" WindowState="Maximized">
+        Title="Untitled - CADye" WindowState="Maximized" KeyDown="OnEscKey">
     <DockPanel>
         <DockPanel.Resources>
             <Style TargetType="ToggleButton">
@@ -24,51 +24,14 @@
             </Style>
         </DockPanel.Resources>
         <StatusBar DockPanel.Dock="Top" Background="LightGray">
-            <StatusBarItem HorizontalAlignment="Center">
-                <TextBlock x:Name="mPrompt" Text="Line: Pick beginning point" FontSize="20"/>
+            <StatusBarItem Margin="108,0,0,0">
+                <TextBlock x:Name="mPrompt" Text="Pick a tool" FontSize="20"/>
             </StatusBarItem>
         </StatusBar>
         <StatusBar DockPanel.Dock="Top" FontWeight="SemiBold" FontSize="15">
-            <Grid x:Name="Grid">
-                <StatusBarItem x:Name="LineDetails" Margin="100,0,0,0" Visibility="Visible">
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="X"/>
-                        <TextBox Height="30" Width="60"/>
-                        <Label Content="Y"/>
-                        <TextBox Height="30" Width="60"/>
-                        <Label Content="dX"/>
-                        <TextBox Height="30" Width="60"/>
-                        <Label Content="dY"/>
-                        <TextBox Height="30" Width="60"/>
-                        <Label Content="Length"/>
-                        <TextBox Height="30" Width="60"/>
-                        <Label Content="Angle"/>
-                        <TextBox Height="30" Width="60"/>
-                    </StackPanel>
-                </StatusBarItem>
-                <StatusBarItem x:Name="RectDetails" Margin="100,0,0,0" Visibility="Collapsed">
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="X"/>
-                        <TextBox Height="30" Width="60"/>
-                        <Label Content="Y"/>
-                        <TextBox Height="30" Width="60"/>
-                        <Label Content="Width"/>
-                        <TextBox Height="30" Width="60"/>
-                        <Label Content="Height"/>
-                        <TextBox Height="30" Width="60"/>
-                    </StackPanel>
-                </StatusBarItem>
-                <StatusBarItem x:Name="CircleDetails" Margin="100,0,0,0" Visibility="Collapsed">
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="X"/>
-                        <TextBox Height="30" Width="60"/>
-                        <Label Content="Y"/>
-                        <TextBox Height="30" Width="60"/>
-                        <Label Content="Radius"/>
-                        <TextBox Height="30" Width="60"/>
-                    </StackPanel>
-                </StatusBarItem>
-            </Grid>
+            <StatusBarItem Margin="100,0,0,0">
+                <StackPanel x:Name="mInputBar" Orientation="Horizontal"/>
+            </StatusBarItem>
         </StatusBar>
         <StackPanel Name="Stack" DockPanel.Dock="Left" Background="LightGray" ToggleButton.Checked="StackPanel_Checked">
             <Button ToolTip="New" Content="New" Click="OnNew_Click"/>
@@ -84,7 +47,7 @@
             <Button Name="redo" ToolTip="Redo" Click="OnRedo_Click">
                 <Image Source="Icons/redo_icon.png"/>
             </Button>
-            <ToggleButton ToolTip="Line" Name="line" IsChecked="True">
+            <ToggleButton ToolTip="Line" Name="line">
                 <Image Source="Icons/line_icon.png"/>
             </ToggleButton>
             <ToggleButton ToolTip="Rectangle" Name="rect">
@@ -93,11 +56,11 @@
             <ToggleButton ToolTip="Circle" Name="circle">
                 <Image Source="Icons/circle_icon.png"/>
             </ToggleButton>
-            <!--<ToggleButton ToolTip="Connected Line" Name="conLine" Click="OnConLine_Click">
+            <ToggleButton ToolTip="Connected Line" Name="conLine">
                 <Image Source="Icons/connecline_icon.png"/>
-            </ToggleButton>-->
+            </ToggleButton>
             <Button Name="Clear" Content="Clear All" Click="OnClear_Click"/>
         </StackPanel>
-        <local:Editor DockPanel.Dock="Right" Background="Black" x:Name="mCanvas"/>
+        <local:Editor x:Name="mCanvas" DockPanel.Dock="Right" Background="White"/>
     </DockPanel>
 </Window>

@@ -1,6 +1,9 @@
-﻿using System.Windows;
+﻿using CADye.Lib;
+using System.Threading;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 
 namespace CADye {
    /// <summary>
@@ -10,25 +13,33 @@ namespace CADye {
       public MainWindow () {
          InitializeComponent ();
          mCanvas.Window = this;
-         mDoc = new (mCanvas);
-         Closing += mDoc.MainWindow_Closing;
+         Closing += mCanvas.DocMgr.MainWindow_Closing;
       }
+
+      public StackPanel InputBar => mInputBar;
 
       public TextBlock Prompt => mPrompt;
 
-      private void OnNew_Click (object sender, RoutedEventArgs e) => mDoc.New (e);
+      private void OnEscKey (object sender, KeyEventArgs e) => mCanvas.EscKey (e);
 
-      private void OnOpen_Click (object sender, RoutedEventArgs e) => mDoc.Open (e);
+      private void OnNew_Click (object sender, RoutedEventArgs e) => mCanvas.DocMgr.New ();
 
-      private void OnSave_Click (object sender, RoutedEventArgs e) => mDoc.Save ();
+      private void OnOpen_Click (object sender, RoutedEventArgs e) {
+         mCanvas.DocMgr.Open (out DrawingSheet dwg);
+         if (dwg.Shapes.Count > 0) {
+            mCanvas.Dwg.Shapes.Clear ();
+            for (int i = 0; i < dwg.Shapes.Count; i++) mCanvas.Dwg.Shapes.Add (dwg.Shapes[i]);
+         }
+         mCanvas.InvalidateVisual ();
+      }
+
+      private void OnSave_Click (object sender, RoutedEventArgs e) => mCanvas.DocMgr.Save ();
 
       private void OnUndo_Click (object sender, RoutedEventArgs e) => mCanvas.Undo ();
 
       private void OnRedo_Click (object sender, RoutedEventArgs e) => mCanvas.Redo ();
 
-      //private void OnConLine_Click (object sender, RoutedEventArgs e) { }
-
-      private void OnClear_Click (object sender, RoutedEventArgs e) => mDoc.Clear ();
+      private void OnClear_Click (object sender, RoutedEventArgs e) => mCanvas.DocMgr.Clear ();
 
       private void StackPanel_Checked (object sender, RoutedEventArgs e) {
          if (mCanvas != null) {
@@ -47,7 +58,5 @@ namespace CADye {
                   toggleButton.IsChecked = (toggleButton == clickedToggleButton);
          } else clickedToggleButton.IsChecked = true;
       }
-
-      DocManager mDoc;
    }
 }

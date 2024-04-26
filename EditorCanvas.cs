@@ -1,4 +1,4 @@
-﻿using CADye.lib;
+﻿using CADye.Lib;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
@@ -11,76 +11,87 @@ namespace CADye;
 #region class Editor ------------------------------------------------------------------------------
 public class Editor : Canvas {
    #region Constructor ----------------------------------------------
-   public Editor () => mWidget = new LineWidget (this);
+   public Editor () {
+      mWidget = new LineWidget (this);
+      mDoc = new (this);
+   }
    #endregion
 
    #region Properties -----------------------------------------------
    public MainWindow Window { get; set; }
+
+   public DocManager DocMgr => mDoc;
 
    public ToggleButton SelectedButton {
       get => mTogglebutton;
       set => mTogglebutton = value;
    }
 
-   public List<Shapes> ShapesList {
-      get => mShapesList;
-      set => mShapesList = value;
+   public DrawingSheet Dwg {
+      get => mDwg;
+      set => mDwg = value;
    }
 
-   public Shapes Shape {
+   public Shape Shape {
       get => mShape;
       set => mShape = value;
    }
    #endregion
 
    #region Overrides ------------------------------------------------
-   protected override void OnMouseLeftButtonDown (MouseButtonEventArgs e) => mWidget.OnMouseDown (e);
-
-   protected override void OnMouseMove (MouseEventArgs e) => mWidget.OnMouseMove (e);
-
    protected override void OnRender (DrawingContext dc) {
       base.OnRender (dc);
-      foreach (var shape in mShapesList) {
-         mDwg.Draw (dc, shape as dynamic);
+      foreach (var shape in mDwg.Shapes) {
+         shape.Draw (new Draw (mPen, dc));
       }
-      if (mShape != null && mShape.pointList.Count > 0) mDwg.Draw (dc, mShape as dynamic);
+      if (mShape != null && mShape.Points.Count > 0) mShape.Draw (new Draw (mFeedback, dc));
    }
    #endregion
 
    #region Methods --------------------------------------------------
+   public void EscKey (KeyEventArgs e) {
+      mWidget.StopDrawing (e);
+      InvalidateVisual ();
+   }
+
    public void Redo () {
       if (mUndoRedo.Count > 0) {
-         mShapesList.Add (mUndoRedo.Pop ());
+         mDwg.Shapes.Add (mUndoRedo.Pop ());
          InvalidateVisual ();
       }
    }
 
    public void Undo () {
-      mShape = null;
-      if (mShapesList.Count > 0) {
-         mUndoRedo.Push (mShapesList.Last ());
-         mShapesList.Remove (mShapesList.Last ());
+      if (!mDoc.IsSaved && mDwg.Shapes.Count > 0) {
+         mUndoRedo.Push (mDwg.Shapes.Last ());
+         mDwg.Shapes.Remove (mDwg.Shapes.Last ());
          InvalidateVisual ();
       }
    }
 
    public void SwitchWidget () {
-      if (mWidget == null) return;
-      mWidget = mTogglebutton.Name switch {
-         "rect" => new RectWidget (this),
-         "circle" => new CircleWidget (this),
-         _ => new LineWidget (this)
-      };
+      mWidget?.Detach ();
+      if (Window != null) {
+         mWidget = mTogglebutton.Name switch {
+            "rect" => new RectWidget (this),
+            "circle" => new CircleWidget (this),
+            "conLine" => new ConLineWidget (this),
+            _ => new LineWidget (this)
+         };
+         mWidget.Attach ();
+      }
    }
    #endregion
 
    #region Private --------------------------------------------------
    ToggleButton mTogglebutton = new ();
-   List<Shapes> mShapesList = new ();
-   Shapes mShape;
+   Shape mShape;
    Widget mWidget;
-   Drawing mDwg = new ();
-   Stack<Shapes> mUndoRedo = new ();
+   Stack<Shape> mUndoRedo = new ();
+   Pen mFeedback = new (Brushes.Red, 1);
+   Pen mPen = new (Brushes.Black, 1);
+   DrawingSheet mDwg = new ();
+   DocManager mDoc;
    #endregion
 }
 #endregion

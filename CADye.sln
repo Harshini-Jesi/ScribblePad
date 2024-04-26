@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CADye", "CADye.csproj", "{E6871B5A-D624-43EB-B6B0-F619FCFAD73C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CADye.lib", "CADye.lib\CADye.lib.csproj", "{F4AB6C82-82E0-48B4-8A0A-59B9926A47E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CADye.Lib", "CADye.lib\CADye.Lib.csproj", "{F4AB6C82-82E0-48B4-8A0A-59B9926A47E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
