@@ -29,7 +29,7 @@ public class DocManager {
          }
       }
       mEditor.Dwg = new ();
-      mEditor.Window.Title = "Untitled - CADye";
+      if (mEditor.Window != null) mEditor.Window.Title = "Untitled - CADye";
       mEditor.InvalidateVisual ();
    }
 
@@ -61,14 +61,14 @@ public class DocManager {
          }
          mSavedFileName = binOpen.FileName;
          mIsSaved = true;
-         mEditor.Window.Title = $"{Path.GetFileNameWithoutExtension (mSavedFileName)} - CADye";
+         if (mEditor.Window != null) mEditor.Window.Title = $"{Path.GetFileNameWithoutExtension (mSavedFileName)} - CADye";
       }
    }
 
    public void Save () {
       if (mSavedFileName == null) SaveNew ();
       else SaveChanges (mSavedFileName);
-      mEditor.Window.Title = $"{Path.GetFileNameWithoutExtension (mSavedFileName)} - CADye";
+      if (mEditor.Window != null) mEditor.Window.Title = $"{Path.GetFileNameWithoutExtension (mSavedFileName)} - CADye";
    }
 
    //Saves the changes done on a saved file
@@ -94,7 +94,7 @@ public class DocManager {
    }
 
    //Shows messagebox when attempting to close the window without saving
-   public void MainWindow_Closing (object sender, CancelEventArgs e) {
+   public void MainWindow_Closing (object? sender, CancelEventArgs e) {
       if (!mIsSaved && mEditor.Dwg.Shapes.Count > 0) {
          MessageBoxResult result = MessageBox.Show ("Do you want to save changes before closing?", "Unsaved Changes", MessageBoxButton.YesNoCancel);
          if (result == MessageBoxResult.Cancel) e.Cancel = true;

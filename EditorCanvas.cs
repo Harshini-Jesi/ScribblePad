@@ -18,7 +18,7 @@ public class Editor : Canvas {
    #endregion
 
    #region Properties -----------------------------------------------
-   public MainWindow Window { get; set; }
+   public MainWindow? Window { get; set; }
 
    public DocManager DocMgr => mDoc;
 
@@ -33,7 +33,7 @@ public class Editor : Canvas {
    }
 
    public Shape Shape {
-      get => mShape;
+      get => mShape!;
       set => mShape = value;
    }
    #endregion
@@ -85,7 +85,7 @@ public class Editor : Canvas {
 
    #region Private --------------------------------------------------
    ToggleButton mTogglebutton = new ();
-   Shape mShape;
+   Shape? mShape;
    Widget mWidget;
    Stack<Shape> mUndoRedo = new ();
    Pen mFeedback = new (Brushes.Red, 1);

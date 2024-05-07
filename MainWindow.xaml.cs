@@ -1,5 +1,4 @@
 ﻿using CADye.Lib;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -52,11 +51,13 @@ namespace CADye {
 
       private void ToggleButton_Click (object sender, RoutedEventArgs e) {
          var clickedToggleButton = sender as ToggleButton;
-         if (clickedToggleButton.IsChecked == true) {
-            foreach (var control in Stack.Children)
-               if (control is ToggleButton toggleButton)
-                  toggleButton.IsChecked = (toggleButton == clickedToggleButton);
-         } else clickedToggleButton.IsChecked = true;
+         if (clickedToggleButton != null) {
+            if (clickedToggleButton.IsChecked == true) {
+               foreach (var control in Stack.Children)
+                  if (control is ToggleButton toggleButton)
+                     toggleButton.IsChecked = (toggleButton == clickedToggleButton);
+            } else clickedToggleButton.IsChecked = true;
+         }
       }
    }
 }

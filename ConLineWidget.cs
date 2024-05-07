@@ -5,10 +5,8 @@ namespace CADye;
 public class ConLineWidget : Widget {
    public ConLineWidget (Editor editor) : base (editor) {
       mEditor.Shape = new ConnectedLine ();
-      mEditor.Window.Prompt.Text = "ConnectedLine: Pick beginning point";
+      ShowPrompt ();
    }
-
-   public override string PromptText => throw new System.NotImplementedException ();
 
    public override string[] Labels => sLabels;
 
@@ -24,10 +22,16 @@ public class ConLineWidget : Widget {
       if (mEditor.Shape.Points.Count > 0) {
          mCurrentPoint.X = e.GetPosition (mEditor).X;
          mCurrentPoint.Y = e.GetPosition (mEditor).Y;
-         mEditor.Window.Prompt.Text = "ConnectedLine: Pick end point";
+         ShowPrompt ();
          mEditor.Shape.UpdateEndPoint (mCurrentPoint);
          mEditor.InvalidateVisual ();
       }
+   }
+
+   public override void ShowPrompt () {
+      if (mEditor.Window != null)
+         mEditor.Window.Prompt.Text = mEditor.Shape.Points.Count == 0 ? 
+            "ConnectedLine: Pick beginning point": "ConnectedLine: Pick end point";
    }
 
    static string[] sLabels = { "X", "Y", "dX", "dY", "Length", "Angle" };

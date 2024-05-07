@@ -5,15 +5,13 @@ namespace CADye;
 public class CircleWidget : Widget {
    public CircleWidget (Editor editor) : base (editor) {
       mEditor.Shape = new Circle ();
-      mEditor.Window.Prompt.Text = PromptText;
+      ShowPrompt ();
    }
-
-   public override string PromptText => mEditor.Shape.Points.Count == 0 ? "Circle: Pick center point" : "Circle: Pick a point on circle";
 
    public override string[] Labels => sLabels;
 
    public override void OnMouseDown (object sender, MouseButtonEventArgs e) {
-      mEditor.Window.Prompt.Text = PromptText;
+      ShowPrompt ();
       mStartPoint.X = e.GetPosition (mEditor).X;
       mStartPoint.Y = e.GetPosition (mEditor).Y;
       mEditor.Shape.Points.Add (mStartPoint);
@@ -21,7 +19,7 @@ public class CircleWidget : Widget {
       if (mEditor.Shape.Points.Count > 2) {
          mEditor.Dwg.Shapes.Add (mEditor.Shape);
          mEditor.Shape = new Circle ();
-         mEditor.Window.Prompt.Text = PromptText;
+         ShowPrompt ();
       }
       mEditor.InvalidateVisual ();
    }
@@ -30,10 +28,16 @@ public class CircleWidget : Widget {
       if (mEditor.Shape.Points.Count > 0) {
          mCurrentPoint.X = e.GetPosition (mEditor).X;
          mCurrentPoint.Y = e.GetPosition (mEditor).Y;
-         mEditor.Window.Prompt.Text = PromptText;
+         ShowPrompt ();
          mEditor.Shape.UpdateEndPoint (mCurrentPoint);
          mEditor.InvalidateVisual ();
       }
+   }
+
+   public override void ShowPrompt () {
+      if (mEditor.Window != null)
+         mEditor.Window.Prompt.Text = mEditor.Shape.Points.Count == 0 ? 
+            "Circle: Pick center point" : "Circle: Pick a point on circle";
    }
 
    static string[] sLabels = { "X", "Y", "Radius" };

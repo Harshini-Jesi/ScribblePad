@@ -9,9 +9,9 @@ public abstract class Widget {
       mEditor.Shape = new Line ();
    }
 
-   public abstract string PromptText { get; }
-
    public abstract string[] Labels { get; }
+
+   public abstract void ShowPrompt ();
 
    public abstract void OnMouseDown (object sender, MouseButtonEventArgs e);
 
@@ -23,7 +23,7 @@ public abstract class Widget {
       foreach (var label in Labels) {
          mLabel = new () { Content = label };
          mTextBox = new () { Height = 30, Width = 60 };
-         mEditor.Window.InputBar.Children.Add (mLabel);
+         mEditor.Window!.InputBar.Children.Add (mLabel);
          mEditor.Window.InputBar.Children.Add (mTextBox);
       }
    }
@@ -31,7 +31,7 @@ public abstract class Widget {
    public void Detach () {
       mEditor.MouseDown -= OnMouseDown;
       mEditor.MouseMove -= OnMouseMove;
-      mEditor.Window.InputBar.Children.Clear ();
+      mEditor.Window!.InputBar.Children.Clear ();
    }
 
    public void StopDrawing (KeyEventArgs e) {

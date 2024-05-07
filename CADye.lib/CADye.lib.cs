@@ -6,7 +6,7 @@
    };
    #endregion
 
-   #region interface IDrawing ---------------------------------------------------------------------
+   #region interface IDrawable --------------------------------------------------------------------
    public interface IDrawable {
       void DrawCircle (List<Point> Points);
       void DrawConLine (List<Point> Points);
@@ -15,15 +15,16 @@
    }
    #endregion
 
-   #region class DrawingArea ----------------------------------------------------------------------
+   #region class DrawingSheet ---------------------------------------------------------------------
    public class DrawingSheet {
       public List<Shape> Shapes = new ();
    }
    #endregion
 
-   #region class Shapes ---------------------------------------------------------------------------
+   #region class Shape ----------------------------------------------------------------------------
    public abstract class Shape {
       public int ShapeId { get; set; }
+
       public List<Point> Points { get => mPoints; set => mPoints = value; }
       List<Point> mPoints = new ();
 
@@ -54,7 +55,7 @@
    #endregion
 
    #region class Line -----------------------------------------------------------------------------
-   public partial class Line : Shape {
+   public class Line : Shape {
       public Line () => ShapeId = 1;
 
       public override void Draw (IDrawable drawing) {
@@ -64,7 +65,7 @@
    #endregion
 
    #region class Rectangle ------------------------------------------------------------------------
-   public partial class Rectangle : Shape {
+   public class Rectangle : Shape {
       public Rectangle () => ShapeId = 2;
 
       public override void Draw (IDrawable drawing) {
@@ -74,7 +75,7 @@
    #endregion
 
    #region class Circle ---------------------------------------------------------------------------
-   public partial class Circle : Shape {
+   public class Circle : Shape {
       public Circle () => ShapeId = 3;
 
       public override void Draw (IDrawable drawing) {
@@ -84,7 +85,7 @@
    #endregion
 
    #region class ConnectedLine --------------------------------------------------------------------
-   public partial class ConnectedLine : Shape {
+   public class ConnectedLine : Shape {
       public ConnectedLine () => ShapeId = 4;
 
       public override void Draw (IDrawable drawing) {

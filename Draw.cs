@@ -5,7 +5,6 @@ using System.Windows.Media;
 
 namespace CADye;
 public class Draw : IDrawable {
-
    public Draw (Pen pen, DrawingContext dwgCntxt) {
       mDwg = dwgCntxt;
       mPen = pen;
