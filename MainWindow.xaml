@@ -53,14 +53,14 @@
             <ToggleButton ToolTip="Rectangle" Name="rect">
                 <Image Source="Icons/rectangle_icon.png"/>
             </ToggleButton>
-            <ToggleButton ToolTip="Circle" Name="circle">
+            <!--<ToggleButton ToolTip="Circle" Name="circle">
                 <Image Source="Icons/circle_icon.png"/>
-            </ToggleButton>
+            </ToggleButton>-->
             <ToggleButton ToolTip="Connected Line" Name="conLine">
                 <Image Source="Icons/connecline_icon.png"/>
             </ToggleButton>
             <Button Name="Clear" Content="Clear All" Click="OnClear_Click"/>
         </StackPanel>
-        <local:Editor x:Name="mCanvas" DockPanel.Dock="Right" Background="White"/>
+        <local:Editor x:Name="mCanvas" DockPanel.Dock="Right" Background="White" ClipToBounds="True"/>
     </DockPanel>
 </Window>

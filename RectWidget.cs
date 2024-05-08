@@ -12,12 +12,12 @@ public class RectWidget : Widget {
 
    public override void OnMouseDown (object sender, MouseButtonEventArgs e) {
       ShowPrompt ();
-      mStartPoint.X = e.GetPosition (mEditor).X;
-      mStartPoint.Y = e.GetPosition (mEditor).Y;
+      mXfmStartPt = mEditor.InvProjXfm.Transform (e.GetPosition (mEditor));
+      (mStartPoint.X, mStartPoint.Y) = (mXfmStartPt.X, mXfmStartPt.Y);
       mEditor.Shape.Points.Add (mStartPoint);
       mEditor.Shape.Points.Add (mStartPoint);
       if (mEditor.Shape.Points.Count > 2) {
-         mEditor.Dwg.Shapes.Add (mEditor.Shape);
+         mEditor.Dwg.AddShape (mEditor.Shape);
          mEditor.Shape = new Rectangle ();
          ShowPrompt ();
       }
@@ -26,8 +26,8 @@ public class RectWidget : Widget {
 
    public override void OnMouseMove (object sender, MouseEventArgs e) {
       if (mEditor.Shape.Points.Count > 0) {
-         mCurrentPoint.X = e.GetPosition (mEditor).X;
-         mCurrentPoint.Y = e.GetPosition (mEditor).Y;
+         mXfmCurrentPt = mEditor.InvProjXfm.Transform (e.GetPosition (mEditor));
+         (mCurrentPoint.X, mCurrentPoint.Y) = (mXfmCurrentPt.X, mXfmCurrentPt.Y);
          ShowPrompt ();
          mEditor.Shape.UpdateEndPoint (mCurrentPoint);
          mEditor.InvalidateVisual ();

@@ -18,7 +18,7 @@ public abstract class Widget {
    public abstract void OnMouseMove (object sender, MouseEventArgs e);
 
    public void Attach () {
-      mEditor.MouseDown += OnMouseDown;
+      mEditor.MouseLeftButtonDown += OnMouseDown;
       mEditor.MouseMove += OnMouseMove;
       foreach (var label in Labels) {
          mLabel = new () { Content = label };
@@ -29,7 +29,7 @@ public abstract class Widget {
    }
 
    public void Detach () {
-      mEditor.MouseDown -= OnMouseDown;
+      mEditor.MouseLeftButtonDown -= OnMouseDown;
       mEditor.MouseMove -= OnMouseMove;
       mEditor.Window!.InputBar.Children.Clear ();
    }
@@ -38,7 +38,7 @@ public abstract class Widget {
       if (e.Key == Key.Escape) {
          if (mEditor.Shape is ConnectedLine) {
             mEditor.Shape.UpdateEndPoint (mStartPoint);
-            mEditor.Dwg.Shapes.Add (mEditor.Shape);
+            mEditor.Dwg.AddShape (mEditor.Shape);
             mEditor.Shape = new ConnectedLine ();
          } else mEditor.Shape.Points.Clear ();
       }
@@ -46,6 +46,7 @@ public abstract class Widget {
 
    protected Editor mEditor;
    protected Point mStartPoint, mCurrentPoint;
+   protected System.Windows.Point mXfmStartPt,mXfmCurrentPt;
    Label? mLabel;
    TextBox? mTextBox;
 }
