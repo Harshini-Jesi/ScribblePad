@@ -1,5 +1,4 @@
-﻿using CADye.Lib;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -23,14 +22,7 @@ namespace CADye {
 
       private void OnNew_Click (object sender, RoutedEventArgs e) => mCanvas.DocMgr.New ();
 
-      private void OnOpen_Click (object sender, RoutedEventArgs e) {
-         mCanvas.DocMgr.Open (out DrawingSheet dwg);
-         if (dwg.Shapes.Count > 0) {
-            mCanvas.Dwg.Shapes.Clear ();
-            for (int i = 0; i < dwg.Shapes.Count; i++) mCanvas.Dwg.Shapes.Add (dwg.Shapes[i]);
-         }
-         mCanvas.InvalidateVisual ();
-      }
+      private void OnOpen_Click (object sender, RoutedEventArgs e) => mCanvas.DocMgr.Open ();
 
       private void OnSave_Click (object sender, RoutedEventArgs e) => mCanvas.DocMgr.Save ();
 

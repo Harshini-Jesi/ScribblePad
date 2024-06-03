@@ -1,43 +1,79 @@
 ﻿using CADye.Lib;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Media;
 
 namespace CADye;
-public class Draw : IDrawable {
-   public Draw (Pen pen, DrawingContext dwgCntxt,Matrix xfm) =>(mPen,mDwg,mXfm)=(pen,dwgCntxt,xfm);
+#region class DrawableBase ------------------------------------------------------------------------
+public abstract class DrawableBase {
+   public abstract void Draw (DrawingCommands drawingCommands);
+}
+#endregion
 
-   public void DrawCircle (List<Point> points) {
-      mStart.X = points[0].X; mStart.Y = points[0].Y;
-      mEnd.X = points[^1].X; mEnd.Y = points[^1].Y;
-      double x = mEnd.X - mStart.X;
-      double y = mEnd.Y - mStart.Y;
-      double radius = Math.Sqrt ((x * x) + (y * y));
-      mDwg.DrawEllipse (null, mPen, mXfm.Transform (mStart), radius, radius);
+#region class DrawingSheet ------------------------------------------------------------------------
+public class DrawingSheet : DrawableBase {
+   #region Properties -----------------------------------------------
+   public Bound Bound { get; private set; }
+
+   public List<Pline> Plines { get => mPlines; set => mPlines = value; }
+   #endregion
+
+   #region Methods --------------------------------------------------
+   public void AddPline (Pline pline) {
+      mPlines.Add (pline);
+      Bound = new Bound (mPlines.Select (pline => pline.Bound));
    }
+   #endregion
 
-   public void DrawConLine (List<Point> points) {
-      for (int i = 0; i < points.Count - 1; i++) {
-         mStart.X = points[i].X; mStart.Y = points[i].Y;
-         mEnd.X = points[i + 1].X; mEnd.Y = points[i + 1].Y;
-         mDwg.DrawLine (mPen, mXfm.Transform (mStart), mXfm.Transform (mEnd));
+   #region DrawableBase implementation ------------------------------
+   public override void Draw (DrawingCommands drawingCommands) {
+      foreach (var pline in mPlines)
+         drawingCommands.DrawLines (pline.GetPoints ());
+   }
+   #endregion
+
+   #region Private --------------------------------------------------
+   List<Pline> mPlines = new ();
+   #endregion
+}
+#endregion
+
+#region class DrawingCommands ---------------------------------------------------------------------
+public class DrawingCommands {
+   #region Constructors ---------------------------------------------
+   private DrawingCommands () { }
+
+   public static DrawingCommands GetInstance { get { mDwgCmd ??= new DrawingCommands (); return mDwgCmd; } }
+   #endregion
+
+   #region Properties -----------------------------------------------
+   public DrawingContext Dc { set => mDc = value; }
+   public Matrix Xfm { get => mXfm; set => mXfm = value; }
+   public Brush Brush { get => mBrush; set => mBrush = value; }
+   #endregion
+
+   #region Methods --------------------------------------------------
+   public void DrawLines (IEnumerable<Point> dwgPts) {
+      var itr = dwgPts.GetEnumerator ();
+      if (!itr.MoveNext ()) return;
+      var prevPt = itr.Current;
+      while (itr.MoveNext ()) {
+         DrawLine (prevPt, itr.Current);
+         prevPt = itr.Current;
       }
    }
 
-   public void DrawLine (List<Point> points) {
-      mStart.X = points[0].X; mStart.Y = points[0].Y;
-      mEnd.X = points[^1].X; mEnd.Y = points[^1].Y;
-      mDwg.DrawLine (mPen, mXfm.Transform(mStart), mXfm.Transform(mEnd));
+   public void DrawLine (Point startPt, Point endPt) {
+      var pen = new Pen (mBrush, 1);
+      mDc!.DrawLine (pen, mXfm.Transform (new System.Windows.Point (startPt.X, startPt.Y)), mXfm.Transform (new System.Windows.Point (endPt.X, endPt.Y)));
    }
+   #endregion
 
-   public void DrawRectangle (List<Point> points) {
-      mStart.X = points[0].X; mStart.Y = points[0].Y;
-      mEnd.X = points[^1].X; mEnd.Y = points[^1].Y;
-      mDwg.DrawRectangle (null, mPen, new (mXfm.Transform (mStart), mXfm.Transform (mEnd)));
-   }
-
-   DrawingContext mDwg;
-   Pen mPen;
+   #region Private --------------------------------------------------
+   DrawingContext? mDc;
    Matrix mXfm;
-   System.Windows.Point mStart, mEnd;
+   Brush mBrush = Brushes.Black;
+   static DrawingCommands? mDwgCmd = null;
+   #endregion
 }
+#endregion
